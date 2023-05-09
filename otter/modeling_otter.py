@@ -613,8 +613,9 @@ class OtterModel(OtterPreTrainedModel):
         for name, param in self.lang_encoder.named_parameters():
             if "gated_cross_attn_layer" not in name:
                 param.requires_grad = False
-        # Unfreeze LM input embeddings
+        # Unfreeze LM input and output embeddings
         self.lang_encoder.get_input_embeddings().requires_grad_(True)
+        self.lang_encoder.get_output_embeddings().requires_grad_(True)
 
     def forward(
         self,
